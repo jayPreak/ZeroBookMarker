@@ -1,0 +1,24 @@
+{
+  "expo": {
+    "scheme": "acme",
+    "web": {
+      "bundler": "metro"
+    },
+    "plugins": [
+      "expo-router"
+    ],
+    "name": "yurr",
+    "slug": "yurr",
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "816e60f0-563e-4994-99c2-e0976d9ffb0d"
+      }
+    },
+    "android": {
+      "package": "com.jaypreak.yurr"
+    }
+  }
+}
