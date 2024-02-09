@@ -1,10 +1,9 @@
-import React from "react";
-import { View, Text, TouchableOpacity, Image } from "react-native";
-import { checkImageURL } from "../../../../utils";
-import styles from "./popularjobcard.style";
+import React from 'react'
+import { View, Text, TouchableOpacity, Image } from 'react-native'
+import { checkImageURL } from '../../../../utils'
+import styles from './popularjobcard.style'
 
 const PopularJobCard = ({ item, selectedJob, handleCardPress }) => {
-  // console.log(item);
   return (
     <TouchableOpacity
       style={styles.container(selectedJob, item)}
@@ -15,9 +14,9 @@ const PopularJobCard = ({ item, selectedJob, handleCardPress }) => {
           source={{
             uri: checkImageURL(item.employer_logo)
               ? item.employer_logo
-              : "https://i.imgur.com/h2BVQvK.png"
+              : 'https://i.imgur.com/h2BVQvK.png'
           }}
-          resizeMode="contain"
+          resizeMode='contain'
           style={styles.logoImage}
         />
       </TouchableOpacity>
@@ -40,7 +39,7 @@ const PopularJobCard = ({ item, selectedJob, handleCardPress }) => {
         </View>
       </View>
     </TouchableOpacity>
-  );
-};
+  )
+}
 
-export default PopularJobCard;
+export default PopularJobCard

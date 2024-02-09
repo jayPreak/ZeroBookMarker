@@ -21,6 +21,14 @@ const JobSearch = () => {
   const [searchResult, setSearchResult] = useState([])
   const [page, setPage] = useState('')
 
+  const savePageNumber = () => {
+    // db.transaction(tx => {
+    //   tx.executeSql('INSERT INTO bookmarks (book_name, page) VALUES (?, ?)', [
+    //     params.id,
+    //     page
+    //   ])
+    // })
+  }
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.lightWhite }}>
       <Stack.Screen
@@ -55,7 +63,7 @@ const JobSearch = () => {
             ></TextInput>
           </View>
 
-          <TouchableOpacity style={styles.searchBtn} onPress=''>
+          <TouchableOpacity style={styles.searchBtn} onPress={savePageNumber}>
             <Image
               source={icons.chevronRight}
               resizeMode='contain'

@@ -7,18 +7,19 @@
     "plugins": [
       "expo-router"
     ],
-    "name": "yurr",
-    "slug": "yurr",
+    "name": "bookmark",
+    "slug": "bookmark",
     "extra": {
       "router": {
         "origin": false
       },
       "eas": {
-        "projectId": "816e60f0-563e-4994-99c2-e0976d9ffb0d"
+        "projectId": "9689007b-d281-4422-a1c4-b1e2e21407be"
       }
     },
     "android": {
-      "package": "com.jaypreak.yurr"
-    }
+      "package": "com.jaypreak.bookmark"
+    },
+    "owner": "jaypreak"
   }
 }
