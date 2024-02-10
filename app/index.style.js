@@ -53,6 +53,19 @@ const styles = StyleSheet.create({
     color: '#a90000',
     marginLeft: 18,
     marginTop: 80
+  },
+  shitBtn: {
+    width: 50,
+    paddingTop: 17,
+    paddingBottom: 17,
+    textAlign: 'center',
+    paddingLeft: 10,
+    paddingRight: 10,
+    backgroundColor: COLORS.tertiary,
+    borderRadius: SIZES.medium,
+    position: 'absolute',
+    right: 3,
+    color: '#FFF'
   }
 })
 

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import NearbyJobCard from '../../common/cards/nearby/NearbyJobCard'
 
 import styles from './nearbyjobs.style'
@@ -14,38 +14,26 @@ import { images, icons, COLORS, FONT, SIZES, SHADOWS } from '../../../constants'
 import { useRouter } from 'expo-router'
 import useFetch from '../../../hook/useFetch'
 
-const Nearbyjobs = () => {
-  const router = useRouter()
+const Nearbyjobs = ({ books }) => {
+  useEffect(() => {
+    console.log('books:', books)
+  }, [])
 
-  const { data, isLoading, error } = useFetch('search', {
-    query: 'React Developer',
-    page: 1,
-    num_pages: 1
-  })
+  const refreshData = () => {}
 
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.headerTitle}>Nearby Jobs</Text>
+        <Text style={styles.headerTitle}>Active Books!</Text>
         <TouchableOpacity>
           <Text style={styles.headerBtn}>Show All</Text>
         </TouchableOpacity>
       </View>
 
       <View style={styles.cardsContainer}>
-        {isLoading ? (
-          <ActivityIndicator size='large' colors={COLORS.primary} />
-        ) : error ? (
-          <Text>Something went wrong</Text>
-        ) : (
-          data?.map(job => (
-            <NearbyJobCard
-              job={job}
-              key={`nearby-job-${job?.job_id}`}
-              handleNavigate={() => router.push(`/job-details/${job?.job_id}`)}
-            />
-          ))
-        )}
+        {books?.map((book, index) => (
+          <NearbyJobCard book={book} key={index} />
+        ))}
       </View>
     </View>
   )

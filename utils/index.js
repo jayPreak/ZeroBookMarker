@@ -40,19 +40,22 @@ export const readFile = async () => {
       // Create an array to hold the final objects
       const dataArray = []
 
-      // Iterate over the content array, skipping every other element (which are the numbers)
+      // Iterate over the content array in pairs
       for (let i = 0; i < contentArray.length; i += 2) {
-        // Create an object with the current string and the next number
-        const obj = {
-          name: contentArray[i].trim(), // Trim extra spaces
-          value: parseInt(contentArray[i + 1].trim()) // Parse integer from string and trim extra spaces
+        // Check if there are enough elements to create an object
+        if (i + 1 < contentArray.length) {
+          // Create an object with the current string and the next number
+          const obj = {
+            name: contentArray[i].trim(), // Trim extra spaces
+            value: parseInt(contentArray[i + 1].trim()) // Parse integer from string and trim extra spaces
+          }
+          // Push the object to the dataArray
+          dataArray.push(obj)
         }
-        // Push the object to the dataArray
-        dataArray.push(obj)
       }
 
       console.log('Data Array:', dataArray)
-      return fileContents
+      return dataArray
     } else {
       console.log('File does not exist')
     }

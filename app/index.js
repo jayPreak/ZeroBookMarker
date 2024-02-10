@@ -13,7 +13,7 @@ import MenuDrawer from 'react-native-side-drawer'
 import { createFile, readFile, writeFile, deleteFileContents } from '../utils'
 
 import { images, icons, COLORS, FONT, SIZES, SHADOWS } from '../constants'
-import { ScreenHeaderBtn, Welcome } from '../components'
+import { NearbyJobs, ScreenHeaderBtn, Welcome } from '../components'
 
 import styles from './index.style'
 
@@ -21,21 +21,22 @@ const Home = () => {
   const router = useRouter()
   const [searchTerm, setSearchTerm] = useState('')
   const [isOpen, setIsOpen] = useState(false)
+  const [reload, setReload] = useState(false)
 
-  const [pageNo, setPageNo] = useState('')
+  const [pageNo, setPageNo] = useState([])
 
   const toggleOpen = () => {
     setIsOpen(!isOpen)
   }
 
-  useEffect(() => {
-    const fetchData = async () => {
-      await createFile()
-      const content = await readFile()
-      console.log('Content:', content)
-      setPageNo(content)
-    }
+  const fetchData = async () => {
+    await createFile()
+    const content = await readFile()
+    console.log('Content:', content)
+    setPageNo(content)
+  }
 
+  useEffect(() => {
     fetchData()
   }, [])
 
@@ -89,10 +90,15 @@ const Home = () => {
 
   const onPressSearch = () => {
     writeFile(searchTerm)
-    readFile()
+    fetchData()
     if (searchTerm) {
       router.push(`/search/${searchTerm}`)
     }
+  }
+
+  const reloadPress = () => {
+    fetchData()
+    setReload(!reload)
   }
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.lightWhite }}>
@@ -123,17 +129,16 @@ const Home = () => {
         />
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={{ flex: 1, padding: SIZES.medium }}>
+            {/* <TouchableOpacity onPress={reloadPress}>
+              <Text style={styles.shitBtn}>R</Text>
+            </TouchableOpacity> */}
             <Welcome
               searchTerm={searchTerm}
               setSearchTerm={setSearchTerm}
               handleClick={onPressSearch}
             />
+            <NearbyJobs books={pageNo} />
           </View>
-          <Text style={styles.bigText}>
-            {pageNo.length < 3
-              ? '0'.repeat(3 - pageNo.length) + pageNo
-              : pageNo}
-          </Text>
         </ScrollView>
       </MenuDrawer>
     </SafeAreaView>
