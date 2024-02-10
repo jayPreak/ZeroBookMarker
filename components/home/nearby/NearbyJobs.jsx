@@ -25,9 +25,9 @@ const Nearbyjobs = ({ books }) => {
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.headerTitle}>Active Books!</Text>
-        <TouchableOpacity>
+        {/* <TouchableOpacity>
           <Text style={styles.headerBtn}>Show All</Text>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
 
       <View style={styles.cardsContainer}>
