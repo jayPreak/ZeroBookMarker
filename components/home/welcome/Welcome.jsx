@@ -29,7 +29,7 @@ const Welcome = ({ searchTerm, setSearchTerm, handleClick }) => {
     <View>
       <View style={styles.container}>
         <Text style={styles.userName}>Welcome Jayesh</Text>
-        <Text style={styles.welcomeMessage}>Add a book!</Text>
+        <Text style={styles.welcomeMessage}>Write the page number :D</Text>
       </View>
       <View style={styles.searchContainer}>
         <View style={styles.searchWrapper}>
@@ -37,7 +37,7 @@ const Welcome = ({ searchTerm, setSearchTerm, handleClick }) => {
             style={styles.searchInput}
             value={searchTerm}
             onChangeText={term => setSearchTerm(term)}
-            placeholder='Which book do you want to add?'
+            placeholder='What page are you on?'
           ></TextInput>
         </View>
 

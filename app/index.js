@@ -10,43 +10,33 @@ import {
 import { useState, useEffect } from 'react'
 import { useRouter, Stack } from 'expo-router'
 import MenuDrawer from 'react-native-side-drawer'
+import { createFile, readFile, writeFile, deleteFileContents } from '../utils'
 
 import { images, icons, COLORS, FONT, SIZES, SHADOWS } from '../constants'
 import { ScreenHeaderBtn, Welcome } from '../components'
 
 import styles from './index.style'
 
-import * as FileSystem from 'expo-file-system'
-
 const Home = () => {
   const router = useRouter()
   const [searchTerm, setSearchTerm] = useState('')
   const [isOpen, setIsOpen] = useState(false)
 
-  const [isLoading, setIsLoading] = useState(true)
-  const [names, setNames] = useState([])
+  const [pageNo, setPageNo] = useState('')
 
   const toggleOpen = () => {
     setIsOpen(!isOpen)
   }
 
-  const readFile = async () => {
-    try {
-      const fileUri = FileSystem.documentDirectory + 'bookmark.txt'
-      console.log(fileUri)
-      const fileInfo = await FileSystem.getInfoAsync(fileUri)
-      if (fileInfo.exists) {
-        const content = await FileSystem.readAsStringAsync('fileUri')
-        console.log('File content:', content)
-      } else {
-        console.log('File does not exist')
-      }
-    } catch (error) {
-      console.error('Error reading file:', error)
-    }
-  }
   useEffect(() => {
-    readFile()
+    const fetchData = async () => {
+      await createFile()
+      const content = await readFile()
+      console.log('Content:', content)
+      setPageNo(content)
+    }
+
+    fetchData()
   }, [])
 
   const drawerContent = () => {
@@ -84,7 +74,7 @@ const Home = () => {
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() =>
-            Linking.openURL('https://github.com/jayPreak/ZeroFinder')
+            Linking.openURL('https://github.com/jayPreak/ZeroBookMarker')
           }
           style={styles.applyBtn}
         >
@@ -98,6 +88,8 @@ const Home = () => {
   }
 
   const onPressSearch = () => {
+    writeFile(searchTerm)
+    readFile()
     if (searchTerm) {
       router.push(`/search/${searchTerm}`)
     }
@@ -137,6 +129,11 @@ const Home = () => {
               handleClick={onPressSearch}
             />
           </View>
+          <Text style={styles.bigText}>
+            {pageNo.length < 3
+              ? '0'.repeat(3 - pageNo.length) + pageNo
+              : pageNo}
+          </Text>
         </ScrollView>
       </MenuDrawer>
     </SafeAreaView>

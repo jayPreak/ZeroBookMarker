@@ -13,6 +13,7 @@ import { Text, SafeAreaView } from 'react-native'
 import { ScreenHeaderBtn, NearbyJobCard } from '../../components'
 import { COLORS, icons, SIZES } from '../../constants'
 import styles from '../../styles/search'
+import { readFile, writeFile } from '../../utils'
 
 const JobSearch = () => {
   const params = useGlobalSearchParams()
@@ -22,12 +23,9 @@ const JobSearch = () => {
   const [page, setPage] = useState('')
 
   const savePageNumber = () => {
-    // db.transaction(tx => {
-    //   tx.executeSql('INSERT INTO bookmarks (book_name, page) VALUES (?, ?)', [
-    //     params.id,
-    //     page
-    //   ])
-    // })
+    writeFile(page)
+    readFile()
+    router.push(`/`)
   }
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.lightWhite }}>
