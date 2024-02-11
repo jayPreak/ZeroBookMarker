@@ -23,9 +23,10 @@ const JobSearch = () => {
   const [page, setPage] = useState('')
 
   const savePageNumber = () => {
-    writeFile(page)
-    readFile()
+    writeFile(page, params.id)
+
     router.push(`/`)
+    readFile()
   }
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.lightWhite }}>

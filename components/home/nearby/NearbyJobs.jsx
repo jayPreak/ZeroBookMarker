@@ -15,12 +15,6 @@ import { useRouter } from 'expo-router'
 import useFetch from '../../../hook/useFetch'
 
 const Nearbyjobs = ({ books }) => {
-  useEffect(() => {
-    console.log('books:', books)
-  }, [])
-
-  const refreshData = () => {}
-
   return (
     <View style={styles.container}>
       <View style={styles.header}>

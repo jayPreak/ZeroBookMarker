@@ -5,7 +5,8 @@ import {
   Animated,
   TouchableOpacity,
   Text,
-  Linking
+  Linking,
+  Alert
 } from 'react-native'
 import { useState, useEffect } from 'react'
 import { useRouter, Stack } from 'expo-router'
@@ -21,7 +22,6 @@ const Home = () => {
   const router = useRouter()
   const [searchTerm, setSearchTerm] = useState('')
   const [isOpen, setIsOpen] = useState(false)
-  const [reload, setReload] = useState(false)
 
   const [pageNo, setPageNo] = useState([])
 
@@ -89,17 +89,30 @@ const Home = () => {
   }
 
   const onPressSearch = () => {
-    writeFile(searchTerm)
+    if (!searchTerm) {
+      return
+    }
+    const bookExists = pageNo.some(book => book.name === searchTerm)
+    if (bookExists) {
+      Alert.alert('Book Exists', `The book "${searchTerm}" already exists.`)
+      return
+    }
     fetchData()
     if (searchTerm) {
       router.push(`/search/${searchTerm}`)
+      setSearchTerm('')
     }
   }
 
-  const reloadPress = () => {
+  const onPressDelete = () => {
+    deleteFileContents()
     fetchData()
-    setReload(!reload)
   }
+
+  const onPressRefresh = () => {
+    fetchData()
+  }
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.lightWhite }}>
       <MenuDrawer
@@ -129,13 +142,12 @@ const Home = () => {
         />
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={{ flex: 1, padding: SIZES.medium }}>
-            {/* <TouchableOpacity onPress={reloadPress}>
-              <Text style={styles.shitBtn}>R</Text>
-            </TouchableOpacity> */}
             <Welcome
               searchTerm={searchTerm}
               setSearchTerm={setSearchTerm}
               handleClick={onPressSearch}
+              handleDeleteClick={onPressDelete}
+              handleRefreshClick={onPressRefresh}
             />
             <NearbyJobs books={pageNo} />
           </View>

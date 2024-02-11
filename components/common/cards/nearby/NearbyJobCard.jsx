@@ -2,11 +2,16 @@ import React from 'react'
 import { View, Text, TouchableOpacity, Image } from 'react-native'
 import { checkImageURL } from '../../../../utils'
 import styles from './nearbyjobcard.style'
-
+import { useRouter } from 'expo-router'
 const NearbyJobCard = ({ book }) => {
-  console.log('book:', book)
+  const router = useRouter()
+  const onPress = () => {
+    if (book.name) {
+      router.push(`/search/${book.name}`)
+    }
+  }
   return (
-    <TouchableOpacity style={styles.container} onPress=''>
+    <TouchableOpacity style={styles.container} onPress={onPress}>
       {/* <TouchableOpacity style={styles.logoContainer}>
         <Image
           source={{

@@ -21,7 +21,13 @@ const jobTypes = [
   'Contractor'
 ]
 
-const Welcome = ({ searchTerm, setSearchTerm, handleClick }) => {
+const Welcome = ({
+  searchTerm,
+  setSearchTerm,
+  handleClick,
+  handleDeleteClick,
+  handleRefreshClick
+}) => {
   const [activeJobType, setActiveJobType] = useState('Full-Time')
 
   const router = useRouter()
@@ -31,6 +37,20 @@ const Welcome = ({ searchTerm, setSearchTerm, handleClick }) => {
         <Text style={styles.userName}>Welcome Jayesh</Text>
         <Text style={styles.welcomeMessage}>Write the book name :D</Text>
       </View>
+      <TouchableOpacity style={styles.deleteBtn} onPress={handleDeleteClick}>
+        <Image
+          source={icons.bin}
+          resizeMode='contain'
+          style={styles.searchBtnImage}
+        />
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.refreshBtn} onPress={handleRefreshClick}>
+        <Image
+          source={icons.sync}
+          resizeMode='contain'
+          style={styles.searchBtnImage}
+        />
+      </TouchableOpacity>
       <View style={styles.searchContainer}>
         <View style={styles.searchWrapper}>
           <TextInput

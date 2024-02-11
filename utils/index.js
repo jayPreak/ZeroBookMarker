@@ -19,7 +19,6 @@ export const createFile = async () => {
     if (!fileInfo.exists) {
       // Create the file if it doesn't exist
       await FileSystem.writeAsStringAsync(fileUri, '')
-      console.log('File created successfully')
     } else {
       console.log('File already exists')
     }
@@ -53,8 +52,6 @@ export const readFile = async () => {
           dataArray.push(obj)
         }
       }
-
-      console.log('Data Array:', dataArray)
       return dataArray
     } else {
       console.log('File does not exist')
@@ -63,11 +60,11 @@ export const readFile = async () => {
     console.error('Error reading file:', error)
   }
 }
-
-export const writeFile = async content => {
+export const writeFile = async (content, bookName) => {
   try {
     const fileUri = FileSystem.documentDirectory + 'bookmark.txt'
     console.log('Writing to file:', content)
+    console.log('BOOKNAME to book:', bookName)
 
     let existingContent = ''
     try {
@@ -75,15 +72,34 @@ export const writeFile = async content => {
       console.log('Existing file contents:', existingContent)
     } catch (error) {
       if (error.code !== 'ENOENT') {
-        console.error('Error reading from file:', readError)
+        console.error('Error reading from file:', error)
       }
     }
-    const updatedContent = existingContent
-      ? `${existingContent},${content}`
-      : content
+    let contentArray = []
+    // Split the existing content into an array of substrings
+    if (existingContent !== '') {
+      contentArray = existingContent.split(',')
+    }
+
+    console.log('Content array:', contentArray)
+
+    // Find the index of the bookName in the array
+    const index = contentArray.findIndex(item => item === bookName)
+    console.log('Index:', index)
+
+    // If the bookName exists in the array, replace the following value with the new content
+    if (index !== -1 && index + 1 < contentArray.length) {
+      contentArray[index + 1] = content
+    } else {
+      // If the bookName does not exist, append it and the content to the array
+      contentArray.push(bookName, content)
+    }
+
+    // Join the array back into a comma-separated string
+    const updatedContent = contentArray.join(',')
+    console.log('Updated content:', updatedContent)
 
     await FileSystem.writeAsStringAsync(fileUri, updatedContent)
-    console.log('Content written to file successfully')
   } catch (error) {
     console.error('Error writing to file:', error)
   }
@@ -92,8 +108,6 @@ export const writeFile = async content => {
 export const deleteFileContents = async () => {
   try {
     const fileUri = FileSystem.documentDirectory + 'bookmark.txt'
-
-    // Write an empty string to the file to delete its contents
     await FileSystem.writeAsStringAsync(fileUri, '')
     console.log('File contents deleted successfully')
   } catch (error) {

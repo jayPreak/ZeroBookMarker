@@ -7,6 +7,8 @@ import share from '../assets/icons/share.png'
 import location from '../assets/icons/location.png'
 import chevronLeft from '../assets/icons/chevron-left.png'
 import chevronRight from '../assets/icons/chevron-right.png'
+import bin from '../assets/icons/bin.png'
+import sync from '../assets/icons/sync.png'
 
 export default {
   heart,
@@ -17,5 +19,7 @@ export default {
   share,
   location,
   chevronLeft,
-  chevronRight
+  chevronRight,
+  bin,
+  sync
 }
